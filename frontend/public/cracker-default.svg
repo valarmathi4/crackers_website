@@ -1,0 +1,35 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#fde68a" />
+      <stop offset="40%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#7c2d12" />
+    </radialGradient>
+    <linearGradient id="burst" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef9c3" />
+      <stop offset="50%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f97316" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg)" />
+  <g transform="translate(200 150)">
+    <g stroke="url(#burst)" stroke-width="3">
+      <line x1="0" y1="-80" x2="0" y2="-20" />
+      <line x1="0" y1="20" x2="0" y2="80" />
+      <line x1="-80" y1="0" x2="-20" y2="0" />
+      <line x1="20" y1="0" x2="80" y2="0" />
+      <line x1="-56" y1="-56" x2="-18" y2="-18" />
+      <line x1="56" y1="56" x2="18" y2="18" />
+      <line x1="56" y1="-56" x2="18" y2="-18" />
+      <line x1="-56" y1="56" x2="-18" y2="18" />
+    </g>
+    <circle r="24" fill="#fef9c3" stroke="#f97316" stroke-width="3" />
+    <text x="0" y="4" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#b91c1c">
+      Iniya Sri
+    </text>
+    <text x="0" y="22" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#b91c1c">
+      Crackers
+    </text>
+  </g>
+</svg>
+
