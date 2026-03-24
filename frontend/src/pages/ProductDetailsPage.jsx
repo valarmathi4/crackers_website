@@ -56,14 +56,14 @@ export default function ProductDetailsPage() {
           <p className="price">₹{product.price}</p>
           <p>{product.description}</p>
           <p className="stock">
-            {product.countInStock > 0 ? `In stock: ${product.countInStock}` : "Out of stock"}
+            {product.stock > 0 ? `In stock: ${product.stock}` : "Out of stock"}
           </p>
-          {product.countInStock > 0 && (
+          {product.stock > 0 && (
             <div className="add-to-cart">
               <input
                 type="number"
                 min="1"
-                max={product.countInStock}
+                max={product.stock}
                 value={qty}
                 onChange={(e) => setQty(Number(e.target.value))}
               />

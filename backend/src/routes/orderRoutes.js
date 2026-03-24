@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import { Cart } from "../models/Cart.js";
 import { Order } from "../models/Order.js";
 import { protect } from "../middleware/authMiddleware.js";
+import { notifyAdminOnStockChange, reserveStockForItems } from "../utils/stockService.js";
 
 const router = express.Router();
 
@@ -33,17 +34,29 @@ router.post(
 
     const itemsPrice = items.reduce((sum, i) => sum + i.price * i.qty, 0);
     const shippingPrice = itemsPrice > 1000 ? 0 : 50;
-    const totalPrice = itemsPrice + shippingPrice;
+    const totalAmount = itemsPrice + shippingPrice;
+
+    let updatedProducts;
+    try {
+      updatedProducts = await reserveStockForItems(items);
+    } catch (err) {
+      res.status(err.statusCode || 400);
+      throw err;
+    }
 
     const order = await Order.create({
-      user: req.user._id,
-      items,
+      userId: req.user._id,
+      products: items,
       shippingAddress,
       paymentMethod: paymentMethod || "COD",
       itemsPrice,
       shippingPrice,
-      totalPrice,
+      totalAmount,
     });
+
+    notifyAdminOnStockChange(updatedProducts).catch((err) =>
+      console.error("Failed to notify admin for stock change:", err)
+    );
 
     // Clear cart after order
     cart.items = [];
@@ -58,7 +71,7 @@ router.get(
   "/my",
   protect,
   asyncHandler(async (req, res) => {
-    const orders = await Order.find({ user: req.user._id }).sort({ createdAt: -1 });
+    const orders = await Order.find({ userId: req.user._id }).sort({ createdAt: -1 });
     res.json(orders);
   })
 );
@@ -68,7 +81,7 @@ router.get(
   "/:id",
   protect,
   asyncHandler(async (req, res) => {
-    const order = await Order.findOne({ _id: req.params.id, user: req.user._id });
+    const order = await Order.findOne({ _id: req.params.id, userId: req.user._id });
     if (!order) {
       res.status(404);
       throw new Error("Order not found");

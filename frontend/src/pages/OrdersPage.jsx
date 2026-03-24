@@ -33,10 +33,10 @@ export default function OrdersPage() {
               </div>
               <div className="order-meta">
                 <p>Date: {new Date(order.createdAt).toLocaleString()}</p>
-                <p>Total: ₹{order.totalPrice}</p>
+                <p>Total: ₹{order.totalAmount}</p>
               </div>
               <div className="order-items">
-                {order.items.map((item, idx) => (
+                {order.products.map((item, idx) => (
                   <div key={idx} className="order-item">
                     <img
                       src={item.imageUrl || "/cracker-default.svg"}

@@ -13,8 +13,8 @@ const orderItemSchema = new mongoose.Schema(
 
 const orderSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    items: { type: [orderItemSchema], required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    products: { type: [orderItemSchema], required: true },
     shippingAddress: {
       fullName: { type: String, required: true },
       phone: { type: String, required: true },
@@ -24,9 +24,11 @@ const orderSchema = new mongoose.Schema(
       pincode: { type: String, required: true },
     },
     paymentMethod: { type: String, default: "COD" },
+    paymentId: { type: String },
     itemsPrice: { type: Number, required: true, min: 0 },
     shippingPrice: { type: Number, required: true, min: 0, default: 0 },
-    totalPrice: { type: Number, required: true, min: 0 },
+    totalAmount: { type: Number, required: true, min: 0 },
+    orderDate: { type: Date, default: Date.now },
     status: {
       type: String,
       enum: ["Placed", "Packed", "Shipped", "Delivered", "Cancelled"],

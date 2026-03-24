@@ -10,7 +10,9 @@ const productSchema = new mongoose.Schema(
       enum: ["Sparklers", "Rockets", "Flower Pots", "Bombs", "Gift Boxes"],
     },
     price: { type: Number, required: true, min: 0 },
-    countInStock: { type: Number, required: true, min: 0, default: 0 },
+    stock: { type: Number, required: true, min: 0, default: 0 },
+    soldCount: { type: Number, default: 0, min: 0 },
+    lowStockThreshold: { type: Number, default: 5, min: 0 },
     imageUrl: { type: String, default: "" }, // can be absolute URL or /uploads/filename
     featured: { type: Boolean, default: false },
   },

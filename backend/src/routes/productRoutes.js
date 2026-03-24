@@ -63,7 +63,7 @@ router.post(
   adminOnly,
   upload.single("image"),
   asyncHandler(async (req, res) => {
-    const { name, description, category, price, countInStock, featured } = req.body;
+    const { name, description, category, price, stock, featured } = req.body;
     let imageUrl = req.body.imageUrl || "";
     if (req.file) {
       imageUrl = `/uploads/${req.file.filename}`;
@@ -73,7 +73,7 @@ router.post(
       description,
       category,
       price,
-      countInStock,
+      stock,
       featured: featured === "true" || featured === true,
       imageUrl,
     });
@@ -88,7 +88,7 @@ router.put(
   adminOnly,
   upload.single("image"),
   asyncHandler(async (req, res) => {
-    const { name, description, category, price, countInStock, featured } = req.body;
+    const { name, description, category, price, stock, featured } = req.body;
     const product = await Product.findById(req.params.id);
     if (!product) {
       res.status(404);
@@ -99,7 +99,7 @@ router.put(
     if (description !== undefined) product.description = description;
     if (category !== undefined) product.category = category;
     if (price !== undefined) product.price = price;
-    if (countInStock !== undefined) product.countInStock = countInStock;
+    if (stock !== undefined) product.stock = stock;
     if (featured !== undefined) product.featured = featured === "true" || featured === true;
 
     if (req.file) {
